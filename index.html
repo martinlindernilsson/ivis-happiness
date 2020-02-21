@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ivis2 Martin Linder Nilsson</title>
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+
+    <!-- Load color scale -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+    <!-- Create a div where the graph will take place -->
+
+    <!-- A bit of CSS: change stroke color of circle on hover (white -> black) -->
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            margin-left: 15vw;
+            margin-right: 15vw;
+            text-align: center;
+        }
+        infotext {
+            display: block;
+            justify-content: center;
+            width: 60vw;
+            margin-left: 6vw;
+            margin-right: 6vw;
+            margin-top: 4vh;
+        }
+        .imageContainer {
+            display: flex;
+            justify-content: center;
+            
+
+        }
+        img {
+            width: 600px;
+            margin-top: 2%;
+        }
+        bubbleChart {
+            display: block;
+        }
+        .bubbles {
+            stroke-width: 2px;
+            stroke: white;
+        }
+        .bubbles:hover {
+            stroke: black;
+        }
+        yAxis {
+            position: relative;
+            top: 60px;
+            right: 120px;
+        }
+        xAxis {
+            position: relative;
+            left: 8vw;
+            top: 65vh;
+        }
+        #my_dataviz {
+            display: block;
+        }
+    </style>
+  </head>
+
+  <body>
+    <h2>Discovery process</h2>
+    <infotext>
+        I am interested in researching what makes people happy around the world.
+        I plan on doing that by looking at an overall sense of happiness and how
+        this relates to various factors such as state of health, trust,
+        financial situation, religion and at how different countries differ when
+        it comes to confidence in various institutions and organizations.
+    </infotext>
+    <infotext>
+        <br>
+        WVS provide data on percieved happiness
+    </infotext>
+    <happiness class="imageContainer">
+        <img src= ./happiness.png></img>
+    </happiness>
+    <happinessGraph class="imageContainer">
+        <image src= ./happinessGraph.png></image>
+    </happinessGraph>
+    <infotext>
+        To be able to show several parameters at once one would need to translate
+        the data into a mean value of some sort, a decision has to be made about 
+        how to achieve that. One way is to bundle the top two answers and use this 
+        percentage as “happy”. Another way is to use some kind of grading system where 
+        “very happy” is worth more than “quite happy” and so on.
+    </infotext>
+    <infotext>
+        <br>
+        The percieved health and financial satisfaction look like this.
+    </infotext>
+    <health class="imageContainer">
+        <image src= ./health.png></image>
+    </health>
+    <financial class="imageContainer">
+        <image src= ./financial.png></image>
+    </financial>
+    <infotext>
+        For this data point, the mean value is used.
+    </infotext>
+    <h2><br><br>Discovery process 2</h2>
+    <infotext>
+        A good way of visualizing this would be a bubble chart that transforms over time. I downloaded all the data I needed from the WVC website and started the arduous process of formatting it. I figured that the happiness would preferably be shown as the size of the bubbles, while the x- and y-axis would be interchangeable to be able to see how the different factors relate to the happiness and to each other.
+    </infotext>
+    <bubbleChart>
+        <yAxis>Satisfaction with financial situation of household (1-10)
+        </yAxis>
+        <xAxis>Percieved state of health (%)</xAxis>
+        <div id="my_dataviz"></div>
+    </bubbleChart>
+    
+    <script>
+      // set the dimensions and margins of the graph
+      var margin = { top: 40, right: 20, bottom: 30, left: 40 },
+        width = 700 - margin.left - margin.right,
+        height = 520 - margin.top - margin.bottom;
+
+      // append the svg object to the body of the page
+      var svg = d3
+        .select("#my_dataviz")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      //Read the data
+      d3.csv("./data.csv", function(data) {
+        // Add X axis
+        var x = d3
+          .scaleLinear()
+          .domain([30, 100])
+          .range([0, width]);
+        svg
+          .append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x));
+
+        // Add Y axis
+        var y = d3
+          .scaleLinear()
+          .domain([3, 8])
+          .range([height, 0]);
+        svg.append("g").call(d3.axisLeft(y));
+
+        // Add a scale for bubble size
+        var z = d3
+          .scaleLinear()
+          .domain([65, 100])
+          .range([4, 30]);
+
+        // Add a scale for bubble color
+        var myColor = d3
+          .scaleOrdinal()
+          .domain(["Asia", "Europe", "Americas", "Africa", "Oceania"])
+          .range(["#009933", "#33cccc", "#cc99ff", "#ff6666", "#cc9900"]);
+
+        // -1- Create a tooltip div that is hidden by default:
+        var tooltip = d3
+          .select("#my_dataviz")
+          .append("div")
+          .style("opacity", 0)
+          .attr("class", "tooltip")
+          .style("background-color", "black")
+          .style("border-radius", "5px")
+          .style("padding", "10px")
+          .style("color", "white");
+
+        // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+        var showTooltip = function(d) {
+          tooltip.transition().duration(200);
+          tooltip
+            .style("opacity", 1)
+            .style("color", "white")
+            .style("background-color", "blue")
+            .html(
+              "Country: " +
+                d.country +
+                ", Percieved happiness: " +
+                d.happiness +
+                "%"
+            )
+
+            .style("left", d3.mouse(this)[0] + 30 + "px")
+            .style("top", d3.mouse(this)[1] + 30 + "px");
+        };
+        var moveTooltip = function(d) {
+          tooltip
+            .style("left", d3.mouse(this)[0] + 30 + "px")
+            .style("top", d3.mouse(this)[1] + 30 + "px");
+        };
+        var hideTooltip = function(d) {
+          tooltip
+            .transition()
+            .duration(200)
+            .style("opacity", 0);
+        };
+
+        // Add dots
+        svg
+          .append("g")
+          .selectAll("dot")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("class", "bubbles")
+          .attr("cx", function(d) {
+            return x(d.health);
+          })
+          .attr("cy", function(d) {
+            return y(d.financial);
+          })
+          .attr("r", function(d) {
+            return z(d.happiness);
+          })
+          .style("fill", function(d) {
+            return myColor(d.continent);
+          })
+          // -3- Trigger the functions
+          .on("mouseover", showTooltip)
+          .on("mousemove", moveTooltip)
+          .on("mouseleave", hideTooltip);
+      });
+    </script>
+  </body>
+</html>
