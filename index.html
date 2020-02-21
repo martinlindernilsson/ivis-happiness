@@ -41,7 +41,11 @@
             margin-top: 2%;
         }
         bubbleChart {
+            text-align: left;
             display: block;
+            margin-left: 10vw;
+            margin-right: 10vw;
+            margin-bottom: 10vh;
         }
         .bubbles {
             stroke-width: 2px;
@@ -50,15 +54,15 @@
         .bubbles:hover {
             stroke: black;
         }
-        yAxis {
+        y-axis {
             position: relative;
-            top: 60px;
-            right: 120px;
+            top: 96px;
+            left: 50px;
         }
-        xAxis {
+        x-axis {
             position: relative;
-            left: 8vw;
-            top: 65vh;
+            left: 500px;
+            top: 484px;
         }
         #my_dataviz {
             display: block;
@@ -107,18 +111,26 @@
     </infotext>
     <h2><br><br>Discovery process 2</h2>
     <infotext>
-        A good way of visualizing this would be a bubble chart that transforms over time. I downloaded all the data I needed from the WVC website and started the arduous process of formatting it. I figured that the happiness would preferably be shown as the size of the bubbles, while the x- and y-axis would be interchangeable to be able to see how the different factors relate to the happiness and to each other.
+        A good way of visualizing this would be a bubble chart that transforms over time. I downloaded all the data I needed from the WVC website and started the arduous process of preparing and formatting it. I figured that the happiness would preferably be shown as the size of the bubbles, while the x- and y-axis would be interchangeable to be able to see how the different factors relate to the happiness and to each other.
     </infotext>
+    <infotext>
+      Unfortunatly, I didn't have time to implement the interchangeability of 
+      parameters or the time aspect however. This is the "finished" visualization, 
+      It features color-coded continents, happiness mapped to bubble-size as well 
+      as Percieved state of health and financial status on the x and y-axis. The bubbles 
+      are hoverable providing further details.
+    </infotext>
+    <infotext> </infotext>
     <bubbleChart>
-        <yAxis>Satisfaction with financial situation of household (1-10)
-        </yAxis>
-        <xAxis>Percieved state of health (%)</xAxis>
+        <y-axis>Satisfaction with <br>financial situation <br>of household (1-10)<br>
+        </y-axis>
+        <x-axis>Percieved state of health (%)</x-axis>
         <div id="my_dataviz"></div>
     </bubbleChart>
     
     <script>
       // set the dimensions and margins of the graph
-      var margin = { top: 40, right: 20, bottom: 30, left: 40 },
+      var margin = { top: 10, right: 20, bottom: 30, left: 30 },
         width = 700 - margin.left - margin.right,
         height = 520 - margin.top - margin.bottom;
 
