@@ -21,6 +21,7 @@
             margin-left: 15vw;
             margin-right: 15vw;
             text-align: center;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
         }
         infotext {
             display: block;
@@ -41,6 +42,8 @@
             margin-top: 2%;
         }
         bubbleChart {
+            position: relative;
+            bottom: 180px;
             text-align: left;
             display: block;
             margin-left: 10vw;
@@ -56,16 +59,25 @@
         }
         y-axis {
             position: relative;
-            top: 96px;
+            top: 220px;
             left: 50px;
         }
         x-axis {
             position: relative;
-            left: 500px;
-            top: 484px;
+            left: 480px;
+            top: 600px;
         }
         #my_dataviz {
             display: block;
+        }
+        legend {
+            position: relative;
+            left: 620px;
+            top: 124px;
+        }
+        learning {
+            position: relative;
+            top: -180px;
         }
     </style>
   </head>
@@ -97,14 +109,15 @@
         “very happy” is worth more than “quite happy” and so on.
     </infotext>
     <infotext>
-        <br>
+        <br><br>
+
         The percieved health and financial satisfaction look like this.
     </infotext>
     <health class="imageContainer">
         <image src= ./health.png></image>
     </health>
     <financial class="imageContainer">
-        <image src= ./financial.png></image>
+        <image style= "position: relative; left: 30px" src= ./financial.png></image>
     </financial>
     <infotext>
         For this data point, the mean value is used.
@@ -114,9 +127,10 @@
         A good way of visualizing this would be a bubble chart that transforms over time. I downloaded all the data I needed from the WVC website and started the arduous process of preparing and formatting it. I figured that the happiness would preferably be shown as the size of the bubbles, while the x- and y-axis would be interchangeable to be able to see how the different factors relate to the happiness and to each other.
     </infotext>
     <infotext>
-      Unfortunatly, I didn't have time to implement the interchangeability of 
-      parameters or the time aspect however. This is the "finished" visualization, 
-      It features color-coded continents, happiness mapped to bubble-size as well 
+      <br>
+      This is the "finished" visualization made in D3. Unfortunatly, I didn't have time to implement the interchangeability of 
+      parameters or the time aspect.  
+      It however features color-coded continents, happiness mapped to bubble-size as well 
       as Percieved state of health and financial status on the x and y-axis. The bubbles 
       are hoverable providing further details.
     </infotext>
@@ -125,9 +139,20 @@
         <y-axis>Satisfaction with <br>financial situation <br>of household (1-10)<br>
         </y-axis>
         <x-axis>Percieved state of health (%)</x-axis>
+        <legend>
+          <Africa style="color:#ff6666">Africa<br></Africa>
+          <Americas style="color:#cc99ff">Americas<br></Americas>
+          <Asia style="color:#009933">Asia<br></Asia>
+          <Europe style="color:#33cccc">Europe<br></Europe>
+          <Oceania style="color:#cc9900">Oceania</Oceania>
+        </legend>
         <div id="my_dataviz"></div>
     </bubbleChart>
-    
+    <learning>
+        <h2>Learning</h2>
+        <infotext>From the realization that WVS data is quite messy and hard to work with i learned (the hard way) to plan visualization projects around the nature of the available data. Eventhough I didn't quite finish the the project as intended I also improved my d3-programming skills.</infotext>
+    </learning>
+    <footer>Martin Linder Nilsson, 2020</footer>
     <script>
       // set the dimensions and margins of the graph
       var margin = { top: 10, right: 20, bottom: 30, left: 30 },
