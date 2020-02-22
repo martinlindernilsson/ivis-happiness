@@ -74,10 +74,11 @@
             position: relative;
             left: 620px;
             top: 124px;
+            width: 16vw;
         }
         learning {
             position: relative;
-            top: -180px;
+            top: -200px;
         }
     </style>
   </head>
@@ -93,7 +94,7 @@
     </infotext>
     <infotext>
         <br>
-        WVS provide data on percieved happiness
+        WVS provide data on perceived happiness
     </infotext>
     <happiness class="imageContainer">
         <img src= ./happiness.png></img>
@@ -105,13 +106,13 @@
         To be able to show several parameters at once one would need to translate
         the data into a mean value of some sort, a decision has to be made about 
         how to achieve that. One way is to bundle the top two answers and use this 
-        percentage as “happy”. Another way is to use some kind of grading system where 
+        percentage as “happy”. Another way is to use a grading system where 
         “very happy” is worth more than “quite happy” and so on.
     </infotext>
     <infotext>
         <br><br>
 
-        The percieved health and financial satisfaction look like this.
+        The perceived health and financial satisfaction data look like this.
     </infotext>
     <health class="imageContainer">
         <image src= ./health.png></image>
@@ -128,17 +129,13 @@
     </infotext>
     <infotext>
       <br>
-      This is the "finished" visualization made in D3. Unfortunatly, I didn't have time to implement the interchangeability of 
-      parameters or the time aspect.  
-      It however features color-coded continents, happiness mapped to bubble-size as well 
-      as Percieved state of health and financial status on the x and y-axis. The bubbles 
-      are hoverable providing further details.
+      This is the "finished" visualization made in D3. Unfortunately, I didn't have time to implement the interchangeability of parameters or the time aspect. It however features color-coded continents, happiness mapped to bubble-size as well as perceived state of health and financial status on the x and y-axis. The bubbles are hoverable providing further details.
     </infotext>
     <infotext> </infotext>
     <bubbleChart>
         <y-axis>Satisfaction with <br>financial situation <br>of household (1-10)<br>
         </y-axis>
-        <x-axis>Percieved state of health (%)</x-axis>
+        <x-axis>Perceived state of health (%)</x-axis>
         <legend>
           <Africa style="color:#ff6666">Africa<br></Africa>
           <Americas style="color:#cc99ff">Americas<br></Americas>
@@ -148,11 +145,15 @@
         </legend>
         <div id="my_dataviz"></div>
     </bubbleChart>
+    
     <learning>
-        <h2>Learning</h2>
-        <infotext>From the realization that WVS data is quite messy and hard to work with i learned (the hard way) to plan visualization projects around the nature of the available data. Eventhough I didn't quite finish the the project as intended I also improved my d3-programming skills.</infotext>
+      <infotext>
+        Before visualizing the data, my hypothesis was that happiness would correlate with financial situation and perceived health. Further I suspected that most African and poorer countries in Asia would be represented as small bubbles in the lower left section of the graph, while western countries would be bigger bubbles in the upper right. There were some surprises though, for example, it turns out that some African countries like Nigeria and Ghana perceive themselves to be healthier than us here in Sweden and that Mexico is where people are most satisfied with their financial status.
+      </infotext>
+        <h2><br>Learning</h2>
+        <infotext>From the realization that WVS data is quite messy and hard to work with I learned (the hard way) to plan visualization projects around the nature of the available data. Even though I didn't quite finish the project as intended I also improved my d3-programming skills.</infotext>
     </learning>
-    <footer>Martin Linder Nilsson, 2020</footer>
+    <footer> DH2321, Martin Linder Nilsson, 2020</footer>
     <script>
       // set the dimensions and margins of the graph
       var margin = { top: 10, right: 20, bottom: 30, left: 30 },
